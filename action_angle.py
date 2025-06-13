@@ -2,6 +2,7 @@ import numpy as np
 import functions as fn
 import os
 import params as par
+import matplotlib.pyplot as plt
 from tqdm.auto import tqdm
 
 def run_action_angle():    
@@ -32,6 +33,9 @@ def run_action_angle():
 
     x = np.sqrt(2 * np.array(action_list)) * np.cos(theta_list)
     y = - np.sqrt(2 * np.array(action_list)) * np.sin(theta_list) * np.array(sign_list)
+
+    plt.scatter(x, y)
+    plt.show()
 
     # --------------- Save results ----------------
 

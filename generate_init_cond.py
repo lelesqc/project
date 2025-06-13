@@ -2,7 +2,7 @@ import numpy as np
 import functions as fn
 import params as par
 import random
-import argparse
+import sys
 import os
 from scipy.special import ellipk
 
@@ -64,14 +64,10 @@ def generate_init(radius, n_particles, seed):
 # ---------------------------------------------
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate initial conditions for simulation.")
-    parser.add_argument("--radius", type=float, required=True, help="Radius of the initial circle.")
-    parser.add_argument("--n_particles", type=int, required=True, help="Number of particles to generate.")
-    parser.add_argument("--seed", type=int, required=True, help="Random seed for reproducibility.")
-    
-    args = parser.parse_args()
-    
-    generate_init(args.radius, args.n_particles, args.seed)
+    radius = int(sys.argv[1])
+    n_particles = int(sys.argv[2])
+    seed = int(sys.argv[3])
+    generate_init(radius, n_particles, seed)
     
     print("Initial conditions generated and saved successfully.")
 

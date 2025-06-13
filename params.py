@@ -27,16 +27,13 @@ A = omega_s / lambd
 
 # -------------- YAML --------------------
 
-if len(sys.argv) > 1:
-    config_path = sys.argv[1]
-else:
-    config_path = "params.yaml"  # default
+config_path = "params.yaml"
 
 with open(config_path) as f:
     config = yaml.safe_load(f)
 
 epsilon_i = config["epsilon_i"]
-epsilon_f = config["config_f"]
+epsilon_f = config["epsilon_f"]
 nu_m_i = config["nu_m_i"]
 nu_m_f = config["nu_m_f"]
 
