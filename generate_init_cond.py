@@ -1,9 +1,9 @@
 import numpy as np
 import functions as fn
 import params as par
-import utils
 import random
 import argparse
+import os
 from scipy.special import ellipk
 
 def generate_init(radius, n_particles, seed):
@@ -51,15 +51,17 @@ def generate_init(radius, n_particles, seed):
     q_init = np.array(phi)
     p_init = np.array(delta)
 
-    # --------------- Save results ----------------
+# --------------- Save results ----------------
 
-    nu_m = par.omega_m / par.omega_s
-    base_filepath = utils.get_output_filepath("init_cond", par.a, nu_m)
-    filepath_with_seed = f"{base_filepath}_seed_{seed}.npz"
-    
-    np.savez(filepath_with_seed, q0=q_init, p0=p_init)   
-    print(f"Data saved in: {filepath_with_seed}")
+    output_dir = "init_conditions"
 
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    file_path = os.path.join(output_dir, "uniform_circle.npz")
+    np.savez(file_path, q=q_init, p=p_init)
+
+# ---------------------------------------------
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate initial conditions for simulation.")
@@ -72,3 +74,5 @@ if __name__ == "__main__":
     generate_init(args.radius, args.n_particles, args.seed)
     
     print("Initial conditions generated and saved successfully.")
+
+    

@@ -31,7 +31,7 @@ def dV_dq(q):
     return par.A**2 * np.sin(q)
 
 def Delta_q(p, t, dt, step):
-    return par.lambd**2 * p * dt + par.a_lambda(step) * par.omega_lambda(step) * np.sin(par.omega_lambda(step) * t + par.phi_0) * dt
+    return par.lambd**2 * p * dt + par.epsilon(step) * np.sin(par.omega_lambda(step) * t + par.phi_0) * dt
 
 def compute_I_from_h0(h0, A):
     kappa_squared = 0.5 * (1 + h0 / (A**2))

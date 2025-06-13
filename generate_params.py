@@ -2,9 +2,6 @@ import yaml
 import numpy as np
 import os
 
-n_values = 10
-a_min = 0.0
-a_max = 0.1
 nu_m_min = 0.8
 nu_m_max = 0.9
 

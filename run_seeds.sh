@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TOTAL_JOBS=10
-RADIUS=0.5
+RADIUS=10
 PARTICLES_PER_JOB=500
 
 # -------------------------

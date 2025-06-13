@@ -35,12 +35,16 @@ else:
 with open(config_path) as f:
     config = yaml.safe_load(f)
 
-a_max = config["a"]
+epsilon_i = config["epsilon_i"]
+epsilon_f = config["config_f"]
 nu_m_i = config["nu_m_i"]
 nu_m_f = config["nu_m_f"]
 
 omega_m_i = nu_m_i * omega_s
 omega_m_f = nu_m_f * omega_s
+
+Delta_eps = epsilon_f - epsilon_i
+Delta_nu = nu_m_f - nu_m_i
 
 # ------------- variables -----------------
 
@@ -52,7 +56,10 @@ n_steps = steps * N_turn
 
 t = 0.0
 
-# ------------- lambda functions ------------
+# ------------- lambda functions -----------
 
-a_lambda = lambda step: a_max * step / (0.1 * n_steps) if step < 0.1 * n_steps else a_max
-nu_lambda = lambda step: nu_m_f if step < 0.1 * n_steps else nu_m_f - (nu_m_f - nu_m_i) * ((step - 0.1 * n_steps) / (n_steps - 0.1 * n_steps))
+percent = 0.1
+
+epsilon = lambda step: epsilon_i * step / int(percent * n_steps) if step < percent * n_steps else epsilon_i + (step - int(percent * n_steps)) * Delta_eps / (n_steps - percent * n_steps)
+omega_lambda = lambda step: nu_m_f if step < percent * n_steps else nu_m_f - (nu_m_f - nu_m_i) * ((step - percent * n_steps) / (n_steps - percent * n_steps))
+a_lambda = lambda step: epsilon(step) / omega_lambda(step)

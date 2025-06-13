@@ -1,18 +1,18 @@
 import numpy as np
 import functions as fn
-import utils
+import os
 import params as par
 from tqdm.auto import tqdm
 
-def run_action_angle():
+def run_action_angle():    
+    data = np.load("integrator/evolved_qp.npz")
+
+    q = data['q']
+    p = data['p']
+
     action_list = []
     theta_list = []
     sign_list = []
-    
-    nu_m = par.omega_m / par.omega_s
-    filepath = utils.get_output_filepath("integrator", par.a, nu_m)
-    data = np.load(filepath)
-    q, p = data['q_arr'], data['p_arr']  
 
     for i in tqdm(range(len(q))):
         h_0 = fn.H0_for_action_angle(q[i], p[i])
@@ -35,11 +35,12 @@ def run_action_angle():
 
     # --------------- Save results ----------------
 
-    nu_m = par.omega_m / par.omega_s
-    filepath = utils.get_output_filepath("cartesian", par.a, nu_m)
-    np.savez(filepath, action=action_list, theta=theta_list, X=x, Y=y)
-    print(f"Data saved in: {filepath}")
+    output_dir = "action_angle"
 
-if __name__ == "__main__":
-    run_action_angle()
-    print("Action-angle coordinates computed and saved successfully.")
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    file_path = os.path.join(output_dir, "cartesian.npz")
+    np.savez(file_path, x=x, y=y)
+
+    
