@@ -13,6 +13,8 @@ do
   echo "--- Running job with SEED=${i} ---"
   
   python generate_init_cond.py ${RADIUS} ${PARTICLES_PER_JOB} ${i}
+  python integrator.py
+  python action_angle.py
     
   echo "Job with SEED=${i} finished."
   echo ""
