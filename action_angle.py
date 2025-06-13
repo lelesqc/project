@@ -37,7 +37,7 @@ def run_action_angle():
     plt.scatter(x, y)
     plt.show()
 
-    # --------------- Save results ----------------
+# --------------- Save results ----------------
 
     output_dir = "action_angle"
 
@@ -46,5 +46,10 @@ def run_action_angle():
 
     file_path = os.path.join(output_dir, "cartesian.npz")
     np.savez(file_path, x=x, y=y)
+    
+# ---------------------------------------------
+
+if __name__ == "__main__":
+    run_action_angle()
 
     

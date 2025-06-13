@@ -13,7 +13,10 @@ def run_integrator(poincare_mode="last", poincare_every=1):
     q = q_init.copy()
     p = p_init.copy()
 
+    count = 0
     q_sec, p_sec = [], []
+    q_single = None
+    p_single = None
 
     for step in tqdm(range(par.n_steps)):
         q += fn.Delta_q(p, par.t, par.dt/2, step)
@@ -28,7 +31,7 @@ def run_integrator(poincare_mode="last", poincare_every=1):
 
         par.t += par.dt
         
-        if np.cos(par.omega_m * par.t) > 1.-1e-5:
+        if np.cos(par.omega_lambda(step) * par.t) > 1.-1e-5:
             if poincare_mode == "first":
                 if q_single == None:
                     q_single = q.copy()
@@ -58,7 +61,7 @@ def run_integrator(poincare_mode="last", poincare_every=1):
     q = np.array(q)
     p = np.array(p)
         
-    # --------------- Save results -----------------
+# --------------- Save results -----------------
 
     output_dir = "integrator"
 
@@ -67,3 +70,8 @@ def run_integrator(poincare_mode="last", poincare_every=1):
 
     file_path = os.path.join(output_dir, "evolved_qp.npz")
     np.savez(file_path, q=q, p=p)
+
+# ----------------------------------------------
+
+if __name__ == "__main__":
+    run_integrator()
