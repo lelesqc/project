@@ -18,7 +18,7 @@ def generate_init(radius, n_particles, seed):
         X = random.uniform(-radius, radius)
         Y = random.uniform(-radius, radius)
 
-        if X**2 + Y**2 <= radius*2:
+        if X**2 + Y**2 <= radius**2:
             X_list.append(X)
             Y_list.append(Y)
 
