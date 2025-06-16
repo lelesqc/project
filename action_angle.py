@@ -7,7 +7,6 @@ from tqdm.auto import tqdm
 
 def run_action_angle():    
     data = np.load("integrator/evolved_qp.npz")
-
     q = data['q']
     p = data['p']
 

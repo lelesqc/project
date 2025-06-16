@@ -30,8 +30,8 @@ def compute_action_angle(kappa_squared, P):
 def dV_dq(q):  
     return par.A**2 * np.sin(q)
 
-def Delta_q(p, t, dt, step):
-    return par.lambd**2 * p * dt + par.epsilon(step) * np.sin(par.omega_lambda(step) * t + par.phi_0) * dt
+def Delta_q(p, t, dt):
+    return par.lambd**2 * p * dt + par.epsilon(t) * np.sin(par.omega_lambda(t) * t + par.phi_0) * dt
 
 def compute_I_from_h0(h0, A):
     kappa_squared = 0.5 * (1 + h0 / (A**2))
@@ -66,7 +66,3 @@ def find_h0_numerical(I_target):
 
     epsilon_h = 1e-9 * par.A**2
     return brentq(G_objective, -par.A**2 + epsilon_h, par.A**2 - epsilon_h)
-
-def update_omega_m(update_freq):
-    if update_freq:
-        par.omega_m += .5 * par.Delta_omega / par.n_steps

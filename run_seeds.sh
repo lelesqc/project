@@ -1,8 +1,8 @@
 #!/bin/bash
 
 TOTAL_JOBS=1
-RADIUS=10
-PARTICLES_PER_JOB=500
+RADIUS=12
+PARTICLES_PER_JOB=1000
 
 # -------------------------
 

@@ -18,10 +18,9 @@ damp_rate = 38.1
 beta = 1.0
 D = 1.82e-3
 N = 100    # fixed
-N_turn = 1000
+N_turn = 10000
 phi_0 = 0.0
 e = 1
-a = 0.1
 lambd = np.sqrt(h * eta * omega_rev)
 A = omega_s / lambd
 
@@ -57,6 +56,9 @@ t = 0.0
 
 percent = 0.1
 
-epsilon = lambda step: epsilon_i * step / int(percent * n_steps) if step < percent * n_steps else epsilon_i + (step - int(percent * n_steps)) * Delta_eps / (n_steps - percent * n_steps)
-omega_lambda = lambda step: nu_m_f if step < percent * n_steps else nu_m_f - (nu_m_f - nu_m_i) * ((step - percent * n_steps) / (n_steps - percent * n_steps))
-a_lambda = lambda step: epsilon(step) / omega_lambda(step)
+T_tot = n_steps * dt
+T_percent = percent * T_tot
+
+epsilon = lambda t: epsilon_i * (t / T_percent) if t < T_percent else epsilon_i + (t - T_percent) * Delta_eps / (T_tot - T_percent)
+omega_lambda = lambda t: nu_m_i if t < T_percent else nu_m_i + (nu_m_f - nu_m_i) * ((t - T_percent) / (T_tot - T_percent))
+a_lambda = lambda t: epsilon(t) / omega_lambda(t)

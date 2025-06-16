@@ -19,27 +19,26 @@ def run_integrator(poincare_mode="last", poincare_every=1):
     p_single = None
 
     for step in tqdm(range(par.n_steps)):
-        q += fn.Delta_q(p, par.t, par.dt/2, step)
+        q += fn.Delta_q(p, par.t, par.dt/2)
         q = np.mod(q, 2 * np.pi)
         
         t_mid = par.t + par.dt/2
 
         p += par.dt * fn.dV_dq(q)
 
-        q += fn.Delta_q(p, t_mid, par.dt/2, step)
+        q += fn.Delta_q(p, t_mid, par.dt/2)
         q = np.mod(q, 2 * np.pi)
 
         par.t += par.dt
         
-        if np.cos(par.omega_lambda(step) * par.t) > 1.-1e-5:
+        if np.cos(par.omega_lambda(par.t) * par.t) > 1.0-1e-5:
             if poincare_mode == "first":
                 if q_single == None:
                     q_single = q.copy()
                     p_single = p.copy()
             elif poincare_mode == "last":
-                if step == par.n_steps - 1:
-                    q_single = q.copy()
-                    p_single = p.copy()
+                q_single = q.copy()
+                p_single = p.copy()
             elif poincare_mode == "all":
                 q_sec.append(q.copy())
                 p_sec.append(p.copy())
@@ -61,6 +60,8 @@ def run_integrator(poincare_mode="last", poincare_every=1):
     q = np.array(q)
     p = np.array(p)
         
+    print(q)
+    
 # --------------- Save results -----------------
 
     output_dir = "integrator"
