@@ -1,7 +1,7 @@
 #!/bin/bash
 
 TOTAL_JOBS=1
-RADIUS=12
+RADIUS=10
 PARTICLES_PER_JOB=1000
 
 # -------------------------
@@ -15,7 +15,8 @@ do
   python generate_init_cond.py ${RADIUS} ${PARTICLES_PER_JOB} ${i}
   python integrator.py
   python action_angle.py
-    
+  python plotter.py
+
   echo "Job with SEED=${i} finished."
   echo ""
 done

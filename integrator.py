@@ -18,7 +18,7 @@ def run_integrator(poincare_mode="last", poincare_every=1):
     q_single = None
     p_single = None
 
-    for step in tqdm(range(par.n_steps)):
+    for _ in tqdm(range(par.n_steps)):
         q += fn.Delta_q(p, par.t, par.dt/2)
         q = np.mod(q, 2 * np.pi)
         
@@ -60,8 +60,6 @@ def run_integrator(poincare_mode="last", poincare_every=1):
     q = np.array(q)
     p = np.array(p)
         
-    print(q)
-    
 # --------------- Save results -----------------
 
     output_dir = "integrator"
