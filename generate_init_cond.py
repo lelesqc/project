@@ -4,7 +4,6 @@ import params as par
 import random
 import sys
 import os
-import matplotlib.pyplot as plt
 from scipy.special import ellipk
 
 def generate_init(radius, n_particles, seed):
@@ -61,9 +60,6 @@ def generate_init(radius, n_particles, seed):
 
     file_path = os.path.join(output_dir, "uniform_circle.npz")
     np.savez(file_path, q=q_init, p=p_init)
-
-    plt.scatter(X_list, Y_list)
-    plt.show()
 
 # ---------------------------------------------
 

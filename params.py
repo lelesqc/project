@@ -1,5 +1,4 @@
 import numpy as np
-import sys
 import yaml
 
 # ------------ machine ----------------
@@ -18,7 +17,7 @@ damp_rate = 38.1
 beta = 1.0
 D = 1.82e-3
 N = 100    # fixed
-N_turn = 50000
+N_turn = 10000
 phi_0 = 0.0
 e = 1
 lambd = np.sqrt(h * eta * omega_rev)
@@ -59,6 +58,9 @@ percent = 0.1
 T_tot = n_steps * dt
 T_percent = percent * T_tot
 
-epsilon = lambda t: epsilon_i * (t / T_percent) if t < T_percent else epsilon_i + (t - T_percent) * Delta_eps / (T_tot - T_percent)
-omega_lambda = lambda t: nu_m_i if t < T_percent else nu_m_i + (nu_m_f - nu_m_i) * ((t - T_percent) / (T_tot - T_percent))
+#epsilon_function = lambda t: -2.5*10e-3 * (t-T_percent)**2/(T_tot-T_percent)**2 + 0.02 * (t-T_percent)/(T_tot-T_percent) + epsilon_i
+epsilon_function = lambda t: (nu_m_i + Delta_nu * (t - T_percent) / (T_tot - T_percent)) * (0.025 + 0.025 * (t - T_percent) / (T_tot - T_percent))
+epsilon = lambda t: epsilon_i * (t / T_percent) if t < T_percent else epsilon_function(t)
+
+omega_lambda = lambda t: nu_m_i if t < T_percent else nu_m_i + (Delta_nu) * ((t - T_percent) / (T_tot - T_percent))
 a_lambda = lambda t: epsilon(t) / omega_lambda(t)
