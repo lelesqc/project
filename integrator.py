@@ -37,6 +37,7 @@ def run_integrator(poincare_mode="last", poincare_every=1):
                     q_single = q.copy()
                     p_single = p.copy()
             elif poincare_mode == "last":
+                #print("New section", par.t, _)
                 q_single = q.copy()
                 p_single = p.copy()
             elif poincare_mode == "all":
